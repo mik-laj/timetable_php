@@ -1,0 +1,5 @@
+TimetableBundle\Entity\StudentGroup:
+    student_group_{1..50}:
+        name: '<regexify("\[A-Z\]")>'
+        field: '@field_*'
+#        events (unique): '<numberbetween(5, 10)>x @event_*'

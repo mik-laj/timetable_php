@@ -1,0 +1,67 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Tutor
+ *
+ * @ORM\Table(name="tutor", indexes={@ORM\Index(name="fk_tutor_room1_idx", columns={"room_id"}), @ORM\Index(name="fk_tutor_organization_unit1_idx", columns={"organization_unit_id"})})
+ * @ORM\Entity
+ */
+class Tutor
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="first_name", type="string", length=45, nullable=true)
+     */
+    private $firstName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="last_name", type="string", length=45, nullable=true)
+     */
+    private $lastName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\OrganizationUnit
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\OrganizationUnit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="organization_unit_id", referencedColumnName="id")
+     * })
+     */
+    private $organizationUnit;
+
+    /**
+     * @var \AppBundle\Entity\Room
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Room")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="room_id", referencedColumnName="id")
+     * })
+     */
+    private $room;
+
+
+}
+

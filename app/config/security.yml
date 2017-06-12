@@ -1,0 +1,42 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        user_provider:
+            id: user.security.user_provider
+
+    encoders:
+        UserBundle\Entity\User: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:
+          - ROLE_USER
+          - ROLE_MANAGE_EVENT
+          - ROLE_MANAGE_FIELD
+          - ROLE_MANAGE_ORGANIZATION_UNIT
+          - ROLE_MANAGE_ROOM
+          - ROLE_MANAGE_STUDENT_GROUP
+          - ROLE_MANAGE_SUBJECT
+          - ROLE_MANAGE_TUTOR
+          - ROLE_MANAGE_USER
+
+
+        ROLE_SUPER_ADMIN:
+          - ROLE_ADMIN
+          - ROLE_ALLOWED_TO_SWITCH
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            logout:
+                path: /logout
+            guard:
+                authenticators:
+                    - user.security.login_form_authenticator

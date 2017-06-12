@@ -1,0 +1,7 @@
+AppBundle\Entity\Tutor:
+    tutor_{1..20}:
+        room: '@room_*'
+        organization_unit: '@organization_unit_*'
+        first_name: '<firstName()>'
+        last_name: '<lastName()>'
+        email: '<freeEmail()>'

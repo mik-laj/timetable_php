@@ -1,0 +1,8 @@
+UserBundle\Entity\User:
+    user_root:
+        username: 'root'
+        plainPassword: 'ilikekitty'
+
+    user_{1..10}:
+        username (unique): '<word()>'
+        plainPassword: 'ilikekitty'

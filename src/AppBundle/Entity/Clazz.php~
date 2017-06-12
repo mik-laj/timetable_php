@@ -1,0 +1,85 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Clazz
+ *
+ * @ORM\Table(name="clazz", indexes={@ORM\Index(name="fk_clazz_tutor1_idx", columns={"tutor_id"}), @ORM\Index(name="fk_clazz_subject1_idx", columns={"subject_id"}), @ORM\Index(name="fk_clazz_field1_idx", columns={"field_id"})})
+ * @ORM\Entity
+ */
+class Clazz
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=45, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \TimetableBundle\Entity\Field
+     *
+     * @ORM\ManyToOne(targetEntity="TimetableBundle\Entity\Field")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="field_id", referencedColumnName="id")
+     * })
+     */
+    private $field;
+
+    /**
+     * @var \AppBundle\Entity\Subject
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Subject")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="subject_id", referencedColumnName="id")
+     * })
+     */
+    private $subject;
+
+    /**
+     * @var \AppBundle\Entity\Tutor
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tutor")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tutor_id", referencedColumnName="id")
+     * })
+     */
+    private $tutor;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TimetableBundle\Entity\Event", inversedBy="clazz")
+     * @ORM\JoinTable(name="clazz_event",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="clazz_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $event;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->event = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

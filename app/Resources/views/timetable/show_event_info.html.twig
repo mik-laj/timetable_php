@@ -1,0 +1,23 @@
+<div class="event-info">
+    <div>
+        <h4>{{ event }}</h4>
+        <p><b>Tutor:</b> {{ event.tutor }}</p>
+        <p><b>Day:</b> {{ event.tutor }}</p>
+        <p><b>Tutor:</b> {{ event.tutor }}</p>
+        <p><b>Time: </b>{{ event.startTime }} - {{ event.endTime }}</p>
+        <p><b>Subject:</b>
+                {% if event.subject %}
+                    <a href="{{ path('subject_show', { 'id': event.subject.id }) }}">{{ event.subject }}</a>
+                {% else %}
+                    No subject
+                {% endif %}
+        </p>
+        <p><b>Tutor:</b>
+                {% if event.tutor %}
+                    <a href="{{ path('tutor_show', { 'id': event.tutor.id }) }}">{{ event.tutor }}</a>
+                {% else %}
+                    No tutor
+                {% endif %}
+        </p>
+    </div>
+</div>

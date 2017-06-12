@@ -1,0 +1,57 @@
+{% extends 'tutor/base.html.twig' %}
+
+
+{% block crud_toolbar %}
+    {% if is_granted('ROLE_MANAGE_EVENT') %}
+        <a href="{{ path('tutor_new') }}" class="btn btn-primary">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Create a new entry
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block crud_title %}Tutor list{% endblock %}
+
+{% block crud_content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">List</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for tutor in tutors %}
+                    <tr>
+                        <td><a href="{{ path('tutor_show', { 'id': tutor.id }) }}">{{ tutor.id }}</a></td>                    
+                        <td>{{ tutor.firstName }}</td>                    
+                        <td>{{ tutor.lastName }}</td>                    
+                        <td>{{ tutor.email }}</td>
+                        <td>
+                            <a href="{{ path('tutor_show', { 'id': tutor.id }) }}" class="btn btn-default">
+                                <i class="fa fa-eye"></i>
+                                Show
+                            </a>
+                            {% if is_granted('ROLE_MANAGE_EVENT') %}
+                                <a href="{{ path('tutor_edit', { 'id': tutor.id }) }}" class="btn btn-default">
+                                    <i class="fa fa-pencil"></i>
+                                    Edit
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

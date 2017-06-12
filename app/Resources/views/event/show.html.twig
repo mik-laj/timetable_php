@@ -1,0 +1,106 @@
+{% extends 'event/base.html.twig' %}
+
+
+{% block crud_toolbar %}
+    <a href="{{ path('event_index') }}" class="btn btn-default">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Back to the list
+    </a>
+    {% if is_granted('ROLE_MANAGE_EVENT') %}
+        <a href="{{ path('event_edit', { 'id': event.id }) }}" class="btn btn-default">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit
+        </a>
+        {{ form_start(delete_form, {"attr": {"style": "display: inline-block"}}) }}
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+            </button>
+        {{ form_end(delete_form) }}
+    {% endif %}
+{% endblock %}
+
+{% block crud_title %}Event{% endblock %}
+
+{% block crud_content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Info</h2>
+        </div>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ event.id }}</td>
+                </tr>
+                <tr>
+                    <th>Day</th>
+                    <td>{{ event.day }}</td>
+                </tr>
+                <tr>
+                    <th>Starttime</th>
+                    <td>{{ event.startTime }}</td>
+                </tr>
+                <tr>
+                    <th>Endtime</th>
+                    <td>{{ event.endTime }}</td>
+                </tr>
+                <tr>
+                    <th>Subject</th>
+                    <td>
+                        {% if event.subject %}
+                            <a href="{{ path('subject_show', { 'id': event.subject.id }) }}">{{ event.subject }}</a>
+                        {% else %}
+                            No subject
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Tutor</th>
+                    <td>
+                        {% if event.tutor %}
+                            <a href="{{ path('tutor_show', { 'id': event.tutor.id }) }}">{{ event.tutor }}</a>
+                        {% else %}
+                            No tutor
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Student group</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for studentGroup in event.studentGroups %}
+                    <tr>
+                        <td><a href="{{ path('student_group_show', { 'id': studentGroup.id }) }}">{{ studentGroup.id }}</a></td>
+                        <td>{{ studentGroup.name }}</td>                                            <td>
+                            <a href="{{ path('student_group_show', { 'id': studentGroup.id }) }}" class="btn btn-default">
+                                <i class="fa fa-eye"></i>
+                                Show
+                            </a>
+                            {% if is_granted('ROLE_MANAGE_STUDENT_GROUP') %}
+                                <a href="{{ path('student_group_edit', { 'id': studentGroup.id }) }}" class="btn btn-default">
+                                    <i class="fa fa-pencil"></i>
+                                    Edit
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

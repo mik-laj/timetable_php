@@ -1,0 +1,50 @@
+
+TimetableBundle\Entity\Event:
+    event_{1..10}:
+        subject: '@subject_*'
+        tutor: '@tutor_*'
+        day: '<numberBetween(1,5)>'
+        start_time: '@time_start_1'
+        end_time: '@time_end_1'
+        student_groups: '5x @student_group_*'
+
+    event_{11..20}:
+        subject: '@subject_*'
+        tutor: '@tutor_*'
+        day: '<numberBetween(1,5)>'
+        start_time: '@time_start_2'
+        end_time: '@time_end_2'
+        student_groups: '5x @student_group_*'
+
+    event_{21..30}:
+        subject: '@subject_*'
+        tutor: '@tutor_*'
+        day: '<numberBetween(1,5)>'
+        start_time: '@time_start_3'
+        end_time: '@time_end_3'
+        student_groups: '5x @student_group_*'
+
+    event_{31..40}:
+        subject: '@subject_*'
+        tutor: '@tutor_*'
+        day: '<numberBetween(1,5)>'
+        start_time: '@time_start_4'
+        end_time: '@time_end_4'
+        student_groups: '5x @student_group_*'
+
+    event_{41..50}:
+        subject: '@subject_*'
+        tutor: '@tutor_*'
+        day: '<numberBetween(1,5)>'
+        start_time: '@time_start_5'
+        end_time: '@time_end_5'
+        student_groups: '5x @student_group_*'
+
+    event_{51..60}:
+        subject: '@subject_*'
+        tutor: '@tutor_*'
+        day: '<numberBetween(1,5)>'
+        start_time: '@time_start_6'
+        end_time: '@time_end_6'
+        student_groups: '5x @student_group_*'
+

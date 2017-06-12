@@ -1,0 +1,4 @@
+AppBundle\Entity\Room:
+    room_{1..30}:
+        name: '<regexify("\[A-Z\]\[0-9\]{3}")>'
+        organization_unit: '@organization_unit_*'

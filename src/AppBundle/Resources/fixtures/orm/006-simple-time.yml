@@ -1,0 +1,64 @@
+AppBundle\Entity\SimpleTime:
+    time_start_1:
+        hour: '08'
+        minute: '00'
+
+    time_end_1:
+        hour: '09'
+        minute: '30'
+
+    time_start_2:
+        hour: '09'
+        minute: '45'
+
+    time_end_2:
+        hour: '11'
+        minute: '15'
+
+    time_start_3:
+        hour: '11'
+        minute: '30'
+
+    time_end_3:
+        hour: '13'
+        minute: '00'
+
+    time_start_4:
+        hour: '13'
+        minute: '15'
+
+    time_end_4:
+        hour: '14'
+        minute: '45'
+
+    time_start_5:
+        hour: '15'
+        minute: '00'
+
+    time_end_5:
+        hour: '16'
+        minute: '30'
+
+    time_start_6:
+        hour: '16'
+        minute: '45'
+
+    time_end_6:
+        hour: '18'
+        minute: '15'
+
+    time_start_7:
+        hour: '18'
+        minute: '30'
+
+    time_end_7:
+        hour: '20'
+        minute: '00'
+
+    time_start_8:
+        hour: '20'
+        minute: '15'
+
+    time_end_8:
+        hour: '21'
+        minute: '45'

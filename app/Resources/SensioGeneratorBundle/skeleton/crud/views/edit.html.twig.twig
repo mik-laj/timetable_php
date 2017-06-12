@@ -1,0 +1,23 @@
+{% block extends %}
+{{ "{% extends 'show_timetable.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+{{ "{% block content %}" }}
+{% set hide_edit, hide_delete = true, false %}
+
+{{ include('crud/views/others/record_actions.html.twig.twig') }}
+
+    <h1>{{ entity }} edit</h1>
+
+    {{ '{{ form_start(edit_form) }}' }}
+    {{ '{{ form_widget(edit_form) }}' }}
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </div>
+    </div>
+    {{ '{{ form_end(edit_form) }}' }}
+
+{{ "{% endblock %}" }}
+{% endblock body %}

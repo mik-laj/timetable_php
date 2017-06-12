@@ -1,0 +1,17 @@
+AppBundle\Entity\OrganizationUnit:
+    organization_unit_root:
+        name: '<regexify("\[A-Z\]{5}")>'
+
+    organization_unit_1_{1..2}:
+        name: '<lexify("W?")>'
+        parent: '@organization_unit_root'
+
+    organization_unit_2_{1..5}:
+        name: '<lexify("I??")>'
+        parent: '@organization_unit_1_*'
+
+    organization_unit_3_{1..15}:
+            name: '<lexify("K??")>'
+            parent: '@organization_unit_2_*'
+
+

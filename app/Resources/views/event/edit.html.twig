@@ -1,0 +1,32 @@
+{% extends 'event/base_form.html.twig' %}
+
+
+{% block crud_toolbar %}
+    <a href="{{ path('event_index') }}" class="btn btn-default">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Back to the list
+    </a>
+    {% if is_granted('ROLE_MANAGE_EVENT') %}
+        {{ form_start(delete_form, {"attr": {"style": "display: inline-block"}}) }}
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+            </button>
+        {{ form_end(delete_form) }}
+    {% endif %}
+
+{% endblock %}
+
+{% block crud_title %}Event edit{% endblock %}
+
+{% block crud_content %}
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </div>
+    </div>
+    {{ form_end(edit_form) }}
+
+{% endblock %}

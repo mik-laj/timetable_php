@@ -1,0 +1,97 @@
+{% extends 'room/base.html.twig' %}
+
+{% block crud_toolbar %}
+    <a href="{{ path('room_index') }}" class="btn btn-default">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Back to the list
+    </a>
+    <a href="{{ path('timetable_room', { 'id': room.id }) }}" class="btn btn-default">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+        Timetable
+    </a>
+    {% if is_granted('ROLE_MANAGE_ROOM') %}
+        <a href="{{ path('room_edit', { 'id': room.id }) }}" class="btn btn-default">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit
+        </a>
+        {{ form_start(delete_form, {"attr": {"style": "display: inline-block"}}) }}
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+            </button>
+        {{ form_end(delete_form) }}
+    {% endif %}
+{% endblock %}
+
+{% block crud_title %}Room{% endblock %}
+
+{% block crud_content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Info</h2>
+        </div>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ room.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ room.name }}</td>
+                </tr>
+                <tr>
+                    <th>Organization unit</th>
+                    <td>
+                        {% set parent = room.organizationUnit %}
+                        {% if parent %}
+                            <a href="{{ path('organizationunit_show', { 'id': parent.id }) }}">{{ parent }}</a>
+                        {% else %}
+                            No organization unit
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Tutor</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for tutor in room.tutors %}
+                    <tr>
+                        <td><a href="{{ path('tutor_show', { 'id': tutor.id }) }}">{{ tutor.id }}</a></td>
+                        <td>{{ tutor.firstName }}</td>
+                        <td>{{ tutor.lastName }}</td>
+                        <td>{{ tutor.email }}</td>
+                        <td>
+                            <a href="{{ path('tutor_show', { 'id': tutor.id }) }}" class="btn btn-default">
+                                <i class="fa fa-eye"></i>
+                                Show
+                            </a>
+                            {% if is_granted('ROLE_MANAGE_TUTOR') %}
+                                <a href="{{ path('tutor_edit', { 'id': tutor.id }) }}" class="btn btn-default">
+                                    <i class="fa fa-pencil"></i>
+                                    Edit
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

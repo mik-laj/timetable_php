@@ -1,0 +1,23 @@
+{% extends 'field/base_form.html.twig' %}
+
+
+{% block crud_toolbar %}
+    <a href="{{ path('field_index') }}" class="btn btn-default">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Back to the list
+    </a>
+{% endblock %}
+
+{% block crud_title %}Field creation{% endblock %}
+
+{% block crud_content %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

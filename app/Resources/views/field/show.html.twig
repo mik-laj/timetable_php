@@ -1,0 +1,114 @@
+{% extends 'field/base.html.twig' %}
+
+
+{% block crud_toolbar %}
+    <a href="{{ path('field_index') }}" class="btn btn-default">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Back to the list
+    </a>
+    {% if is_granted('ROLE_MANAGE_FIELD') %}
+        <a href="{{ path('field_edit', { 'id': field.id }) }}" class="btn btn-default">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit
+        </a>
+        {{ form_start(delete_form, {"attr": {"style": "display: inline-block"}}) }}
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+            </button>
+        {{ form_end(delete_form) }}
+    {% endif %}
+{% endblock %}
+
+{% block crud_title %}Field{% endblock %}
+
+{% block crud_content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Info</h2>
+        </div>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ field.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ field.name }}</td>
+                </tr>
+                <tr>
+                    <th>Mode</th>
+                    <td>{{ field.mode }}</td>
+                </tr>
+                <tr>
+                    <th>Tutor</th>
+                    <td>
+                        {% if field.tutor %}
+                            <a href="{{ path('tutor_show', { 'id' : field.tutor.id }) }}"> {{ field.tutor }}</a>
+                        {% else %}
+                            No tutor
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Organization unit</th>
+                    <td>
+                        {% if field.organizationUnit %}
+                            <a href="{{ path('organizationunit_show', { 'id' : field.organizationUnit.id }) }}"> {{ field.organizationUnit }}</a>
+                        {% else %}
+                            No tutor
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Semester</th>
+                    <td>{{ field.semester }}</td>
+                </tr>
+                <tr>
+                    <th>Number of semester</th>
+                    <td>{{ field.numberOfSemester }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">List</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for studentGroup in field.studentGroups %}
+                    <tr>
+                        <td><a href="{{ path('student_group_show', { 'id': studentGroup.id }) }}">{{ studentGroup.id }}</a></td>
+                        <td>{{ studentGroup.name }}</td>
+                        <td>
+                            <a href="{{ path('student_group_show', { 'id': studentGroup.id }) }}" class="btn btn-default">
+                                <i class="fa fa-eye"></i>
+                                Show
+                            </a>
+                            {% if is_granted('ROLE_MANAGE_STUDENT_GROUP') %}
+                            <a href="{{ path('student_group_edit', { 'id': studentGroup.id }) }}" class="btn btn-default">
+                                <i class="fa fa-pencil"></i>
+                                Edit
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,24 @@
+TimetableBundle\Entity\Field:
+    tpl_field (template):
+        name: 'Informatyka'
+        mode: 'Part-time'
+        tutor: '@tutor_*'
+        organization_unit: '@organization_unit_*'
+
+    tpl_field_with_semester (template, extends tpl_field):
+        number_of_semester: '<numberBetween(5, 8)>'
+        semester: '<numberBetween(1, $number_of_semester)>'
+
+    field_{1..3} (extends tpl_field):
+        name: 'Computer Science<current()>'
+        semester: '<current()>'
+
+    field_{4..6} (extends tpl_field_with_semester):
+        name: 'Mathematics<current()>'
+        semester: '<current()>'
+
+    field_{7..8} (extends tpl_field_with_semester):
+        name: 'Physics <current()>'
+
+
+

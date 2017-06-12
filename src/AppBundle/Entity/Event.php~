@@ -1,0 +1,81 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Event
+ *
+ * @ORM\Table(name="event", indexes={@ORM\Index(name="fk_event_tutor1_idx", columns={"tutor_id"}), @ORM\Index(name="fk_event_subject1_idx", columns={"subject_id"})})
+ * @ORM\Entity
+ */
+class Event
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="start_time", type="string", length=4, nullable=false)
+     */
+    private $startTime;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="end_time", type="string", length=4, nullable=false)
+     */
+    private $endTime;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="day", type="smallint", nullable=false)
+     */
+    private $day;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\Subject
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Subject")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="subject_id", referencedColumnName="id")
+     * })
+     */
+    private $subject;
+
+    /**
+     * @var \AppBundle\Entity\Tutor
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tutor")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tutor_id", referencedColumnName="id")
+     * })
+     */
+    private $tutor;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Clazz", mappedBy="event")
+     */
+    private $clazz;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->clazz = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

@@ -1,0 +1,112 @@
+{% extends 'studentgroup/base.html.twig' %}
+
+
+{% block crud_toolbar %}
+    <a href="{{ path('student_group_index') }}" class="btn btn-default">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Back to the list
+    </a>
+    <a href="{{ path('timetable_student_group', { 'id': studentGroup.id }) }}" class="btn btn-default">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+        Timetable
+    </a>
+    {% if is_granted('ROLE_MANAGE_STUDENT_GROUP') %}
+        <a href="{{ path('student_group_edit', { 'id': studentGroup.id }) }}" class="btn btn-default">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit
+        </a>
+        {{ form_start(delete_form, {"attr": {"style": "display: inline-block"}}) }}
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+            </button>
+        {{ form_end(delete_form) }}
+    {% endif %}
+{% endblock %}
+
+{% block crud_title %}StudentGroup{% endblock %}
+
+{% block crud_content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Info</h2>
+        </div>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ studentGroup.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ studentGroup.name }}</td>
+                </tr>
+                <tr>
+                    <th>Field</th>
+                    <td>
+                        {% if studentGroup.field  %}
+                        <a href="{{ path('field_show', { 'id': studentGroup.field.id }) }}">
+                            {{ studentGroup.field }}
+                        </a>
+                        {% else %}
+                            No field
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">List</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Start time</th>
+                        <th>End time</th>
+                        <th>Day</th>
+                        <th>Subject</th>
+                        <th>Tutor</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for event in studentGroup.events %}
+                    <tr>
+                        <td><a href="{{ path('event_show', { 'id': event.id }) }}">{{ event.id }}</a></td>
+                        <td>{{ event.startTime }}</td>
+                        <td>{{ event.endTime }}</td>
+                        <td>{{ event.day }}</td>
+                        <td>
+                            <a href="{{ path('subject_show', { 'id': event.subject.id }) }}">{{ event.subject }}</a>
+                        </td>
+                        <td>
+                            {% if event.tutor %}
+                                <a href="{{ path('tutor_show', { 'id': event.tutor.id }) }}">{{ event.tutor }}</a>
+                            {% else %}
+                                No tutor
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('event_show', { 'id': event.id }) }}" class="btn btn-default">
+                                <i class="fa fa-eye"></i>
+                                Show
+                            </a>
+                            {% if is_granted('ROLE_MANAGE_EVENT') %}
+                                <a href="{{ path('event_edit', { 'id': event.id }) }}" class="btn btn-default">
+                                    <i class="fa fa-pencil"></i>
+                                    Edit
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

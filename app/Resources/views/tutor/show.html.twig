@@ -1,0 +1,115 @@
+{% extends 'tutor/base.html.twig' %}
+
+
+{% block crud_toolbar %}
+    <a href="{{ path('tutor_index') }}" class="btn btn-default">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Back to the list
+    </a>
+    <a href="{{ path('timetable_tutor', { 'id': tutor.id }) }}" class="btn btn-default">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+        Timetable
+    </a>
+    {% if is_granted('ROLE_MANAGE_TUTOR') %}
+        <a href="{{ path('tutor_edit', { 'id': tutor.id }) }}" class="btn btn-default">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit
+        </a>
+        {{ form_start(delete_form, {"attr": {"style": "display: inline-block"}}) }}
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+            </button>
+        {{ form_end(delete_form) }}
+    {% endif %}
+{% endblock %}
+
+{% block crud_title %}Tutor{% endblock %}
+
+{% block crud_content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Info</h2>
+        </div>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ tutor.id }}</td>
+                </tr>
+                <tr>
+                    <th>Firstname</th>
+                    <td>{{ tutor.firstName }}</td>
+                </tr>
+                <tr>
+                    <th>Lastname</th>
+                    <td>{{ tutor.lastName }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ tutor.email }}</td>
+                </tr>
+                <tr>
+                    <th>Room</th>
+                    <td>
+                        {% if tutor.room %}
+                            <a href="{{ path('room_show', { 'id': tutor.room.id }) }}">
+                                {{ tutor.room }}
+                            </a>
+                        {% else %}
+                            No room
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">List</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Start time</th>
+                    <th>End time</th>
+                    <th>Day</th>
+                    <th>Subject</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for event in tutor.events %}
+                    <tr>
+                        <td><a href="{{ path('event_show', { 'id': event.id }) }}">{{ event.id }}</a></td>
+                        <td>{{ event.startTime }}</td>
+                        <td>{{ event.endTime }}</td>
+                        <td>{{ event.day }}</td>
+                        <td>
+                            {% if event.subject %}
+                                <a href="{{ path('subject_show', { 'id': event.subject.id }) }}">{{ event.subject }}</a>
+                            {% else %}
+                                No subject
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('event_show', { 'id': event.id }) }}" class="btn btn-default">
+                                <i class="fa fa-eye"></i>
+                                Show
+                            </a>
+                            {% if is_granted('ROLE_MANAGE_EVENT') %}
+                                <a href="{{ path('event_edit', { 'id': event.id }) }}" class="btn btn-default">
+                                    <i class="fa fa-pencil"></i>
+                                    Edit
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

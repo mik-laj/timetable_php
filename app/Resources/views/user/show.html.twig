@@ -1,0 +1,47 @@
+{% extends 'user/base.html.twig' %}
+
+
+{% block crud_toolbar %}
+    <a href="{{ path('user_index') }}" class="btn btn-default">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Back to the list
+    </a>
+    {% if is_granted('ROLE_MANAGE_USER') %}
+        <a href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-default">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit
+        </a>
+        <a href="{{ path('user_change_password', { 'id': user.id }) }}" class="btn btn-default">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            Change password
+        </a>
+        {{ form_start(delete_form, {"attr": {"style": "display: inline-block"}}) }}
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+            </button>
+        {{ form_end(delete_form) }}
+    {% endif %}
+{% endblock %}
+
+{% block crud_title %}User{% endblock %}
+
+{% block crud_content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Info</h2>
+        </div>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <th>Username</th>
+                    <td>{{ user.username }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

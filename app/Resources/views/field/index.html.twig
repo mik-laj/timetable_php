@@ -1,0 +1,75 @@
+{% extends 'field/base.html.twig' %}
+
+
+{% block crud_toolbar %}
+    {% if is_granted('ROLE_MANAGE_FIELD') %}
+        <a href="{{ path('field_new') }}" class="btn btn-primary">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Create a new entry
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block crud_title %}Field list{% endblock %}
+
+{% block crud_content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">List</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Mode</th>
+                        <th>Tutor</th>
+                        <th>Organization Unit</th>
+                        <th>Semester</th>
+                        <th>Number of semester</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for field in fields %}
+                    <tr>
+                        <td><a href="{{ path('field_show', { 'id': field.id }) }}">{{ field.id }}</a></td>                    
+                        <td>{{ field.name }}</td>                    
+                        <td>{{ field.mode }}</td>
+                        <td>
+                            {% if field.tutor %}
+                                <a href="{{ path('tutor_show', { 'id' : field.tutor.id }) }}"> {{ field.tutor }}</a>
+                            {% else %}
+                                No tutor
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if field.organizationUnit %}
+                                <a href="{{ path('organizationunit_show', { 'id' : field.organizationUnit.id }) }}"> {{ field.organizationUnit }}</a>
+                            {% else %}
+                                No Organization Unit
+                            {% endif %}
+                        </td>
+                        <td>{{ field.semester }}</td>
+                        <td>{{ field.numberOfSemester }}</td>
+                        <td>
+                            <a href="{{ path('field_show', { 'id': field.id }) }}" class="btn btn-default">
+                                <i class="fa fa-eye"></i>
+                                Show
+                            </a>
+                            {% if is_granted('ROLE_MANAGE_FIELD') %}
+                                <a href="{{ path('field_edit', { 'id': field.id }) }}" class="btn btn-default">
+                                    <i class="fa fa-pencil"></i>
+                                    Edit
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'organizationunit/base.html.twig' %}
+
+
+{% block crud_toolbar %}
+    <a href="{{ path('organizationunit_index') }}" class="btn btn-default">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Back to the list
+    </a>
+    {% if is_granted('ROLE_MANAGE_ORGANIZATION_UNIT') %}
+        <a href="{{ path('organizationunit_edit', { 'id': organizationUnit.id }) }}" class="btn btn-default">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit
+        </a>
+        {{ form_start(delete_form, {"attr": {"style": "display: inline-block"}}) }}
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+            </button>
+        {{ form_end(delete_form) }}
+    {% endif %}
+{% endblock %}
+
+{% block crud_title %}OrganizationUnit{% endblock %}
+
+{% macro menu_links(links) %}
+    {% import _self as macros %}
+    {% for link in links %}
+        <li>
+            <a href="{{ path('organizationunit_show', { 'id': link.id }) }}">{{ link.name }}</a>
+            {% if link.__children %}
+                <ul>
+                    {{ macros.menu_links(link.__children) }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% block crud_content %}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Info</h2>
+                </div>
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ organizationUnit.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ organizationUnit.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Parent</th>
+                        <td>
+                            {% set parent = organizationUnit.parent %}
+                            {% if parent %}
+                                <a href="{{ path('organizationunit_show', { 'id': parent.id }) }}">{{ parent }}</a>
+                            {% else %}
+                                No parent
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Rooms</h2>
+                </div>
+                <div class="panel-body">
+                    {% if organizationUnit.rooms | length > 0 %}
+                            <ul>
+                            {% for room in organizationUnit.rooms %}
+                                <li><a href="{{ path('room_show', { 'id': room.id }) }}">{{ room }}</a></li>
+                            {% endfor %}
+                            </ul>
+                    {% else %}
+                            No rooms
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Tree view</h2>
+        </div>
+        <div class="panel-content">
+            <ul>
+                <li>
+                    <a href="{{ path('organizationunit_show', { 'id': organizationUnit.id }) }}">{{ organizationUnit }}</a>
+                    <ul>
+                        {{ macros.menu_links(children) }}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">List</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Mode</th>
+                    <th>Tutor</th>
+                    <th>Semester</th>
+                    <th>Number of semester</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for field in organizationUnit.fields %}
+                    <tr>
+                        <td><a href="{{ path('field_show', { 'id': field.id }) }}">{{ field.id }}</a></td>
+                        <td>{{ field.name }}</td>
+                        <td>{{ field.mode }}</td>
+                        <td>
+                            {% if field.tutor %}
+                                <a href="{{ path('tutor_show', { 'id' : field.tutor.id }) }}"> {{ field.tutor }}</a>
+                            {% else %}
+                                No tutor
+                            {% endif %}
+                        </td>
+                        <td>{{ field.semester }}</td>
+                        <td>{{ field.numberOfSemester }}</td>
+                        <td>
+                            <a href="{{ path('field_show', { 'id': field.id }) }}" class="btn btn-default">
+                                <i class="fa fa-eye"></i>
+                                Show
+                            </a>
+                            {% if is_granted('ROLE_MANAGE_EVENT') %}
+                                <a href="{{ path('field_edit', { 'id': field.id }) }}" class="btn btn-default">
+                                    <i class="fa fa-pencil"></i>
+                                    Edit
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

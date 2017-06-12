@@ -1,0 +1,23 @@
+services:
+#    user.example:
+#        class: UserBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    user.security.login_form_authenticator:
+        class: UserBundle\Security\LoginFormAuthenticator
+        autowire: true
+
+    user.form.login_form:
+        class: UserBundle\Form\LoginForm
+        autowire: true
+        tags: [form.type]
+
+    user.security.user_provider:
+        class: UserBundle\Security\UserProvider
+        arguments:
+          - "@doctrine.orm.entity_manager"
+
+    app.doctrine.hash_password_listener:
+        class: UserBundle\Doctrine\HashPasswordListener
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber }

@@ -1,0 +1,11 @@
+
+services:
+    timetable.data_fixtures.provider.timetable:
+        class: TimetableBundle\DataFixtures\TimetableProvider
+        tags:
+            - { name: nelmio_alice.faker.provider }
+
+    timetable.manager:
+        class: TimetableBundle\TimetableManager
+        arguments:
+            - "@doctrine.orm.entity_manager"

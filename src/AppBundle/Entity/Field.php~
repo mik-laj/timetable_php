@@ -1,0 +1,57 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Field
+ *
+ * @ORM\Table(name="field", indexes={@ORM\Index(name="fk_field_organization_unit1_idx", columns={"organization_unit_id"})})
+ * @ORM\Entity
+ */
+class Field
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=45, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mode", type="string", length=45, nullable=false)
+     */
+    private $mode;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="duration", type="integer", nullable=false)
+     */
+    private $duration;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \AppBundle\Entity\OrganizationUnit
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\OrganizationUnit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="organization_unit_id", referencedColumnName="id")
+     * })
+     */
+    private $organizationUnit;
+
+
+}
+
